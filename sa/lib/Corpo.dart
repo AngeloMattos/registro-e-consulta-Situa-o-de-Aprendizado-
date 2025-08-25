@@ -1,6 +1,5 @@
 import 'package:mysql_client/mysql_client.dart';
 import 'cliente.dart';
-import 'pedido.dart';
 
 Future<void> main() async {
   
@@ -10,11 +9,13 @@ Future<void> main() async {
     userName: "angelo",
     password: "senha",
     databaseName: "devs2blu",
+    secure: false,
+
   );
   await conn.connect();
   print("Conectado ao MySQL");
 
-  var cliente = Cliente(nome: "João Silva", email: "joao@email.com");
+  var cliente = Cliente(nome: "Angelo", email: "angelo@email.com");
   await conn.execute(
     "INSERT INTO clientes (nome, email) VALUES (:nome, :email)",
     {"nome": cliente.nome, "email": cliente.email},
@@ -22,7 +23,7 @@ Future<void> main() async {
   print("👤 Cliente inserido: ${cliente.nome}");
 
 
-  var pedido = Pedido(clienteId: 1, descricao: "Notebook", valor: 3500.00);
+  var pedido = Pedido(clienteId: 2, descricao: "Celular", valor: 5000.00);
   await conn.execute(
     "INSERT INTO pedidos (cliente_id, descricao, valor) VALUES (:cid, :desc, :val)",
     {"cid": pedido.clienteId, "desc": pedido.descricao, "val": pedido.valor},
